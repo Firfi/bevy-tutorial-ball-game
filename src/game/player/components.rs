@@ -1,4 +1,4 @@
-use crate::player::types::*;
+use crate::game::player::types::*;
 use bevy::prelude::*;
 
 #[derive(Component)]

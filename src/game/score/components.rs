@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::score::types::*;
+use crate::game::score::types::*;
 
 #[derive(Component, Debug)]
 pub struct ScoreComponent(pub StarCount);

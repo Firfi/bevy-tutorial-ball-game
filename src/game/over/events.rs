@@ -1,4 +1,4 @@
-use crate::score::types::StarCount;
+use crate::game::score::types::StarCount;
 
 pub struct GameOverEvent {
     pub score: StarCount,

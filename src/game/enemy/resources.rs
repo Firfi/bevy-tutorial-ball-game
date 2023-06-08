@@ -1,5 +1,5 @@
 use bevy::time::TimerMode::Repeating;
-use crate::enemy::constants::*;
+use crate::game::enemy::constants::*;
 use bevy::prelude::*;
 
 #[derive(Resource)]

@@ -1,16 +1,17 @@
 use bevy::prelude::*;
-use crate::collision::detect_collision_circles;
-use crate::enemy::components::*;
-use crate::enemy::constants::*;
-use crate::player::components::Player;
+use crate::game::collision::detect_collision_circles;
+use crate::game::enemy::components::*;
+use crate::game::enemy::constants::*;
+use crate::game::player::components::Player;
 use rand::prelude::*;
-use crate::player::constants::PLAYER_SIZE;
+use crate::game::player::constants::PLAYER_SIZE;
 
 pub fn make_random_enemy(
     asset_server: &Res<AssetServer>,
     window: &Window,
     player_transform_query: &Query<&Transform, With<Player>>
 ) -> Option<(SpriteBundle, Enemy)> {
+    // TODO query doesn't work here despite this running after player entity is spawned
     let player_coordss: Vec<Vec3> = player_transform_query.iter().map(|player_transform| {
         player_transform.translation
     }).collect();

@@ -1,10 +1,10 @@
 use bevy::prelude::*;
-use crate::game::events::GameOverEvent;
-use crate::player::components::Player;
-use crate::player::types::PlayerName;
-use crate::score::components::*;
-use crate::score::resources::*;
-use crate::star::events::StarCollideEvent;
+use crate::game::over::events::GameOverEvent;
+use crate::game::player::components::Player;
+use crate::game::player::types::PlayerName;
+use crate::game::score::components::*;
+use crate::game::score::resources::*;
+use crate::game::star::events::StarCollideEvent;
 
 pub fn score_calculation(
     mut entity_score_query: Query<(Entity, &mut ScoreComponent)>,

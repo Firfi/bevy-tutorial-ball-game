@@ -1,26 +1,38 @@
-mod systems;
-pub mod events;
-
+use bevy::app::Plugin;
 use bevy::prelude::*;
-use crate::enemy::Labels::PlayerCollision as PlayerEnemyCollision;
 
-use crate::game::systems::*;
-use crate::game::events::*;
+mod over;
+mod enemy;
+mod player;
+mod score;
+mod star;
+mod collision;
+mod systems;
+
+use systems::*;
+use crate::AppState;
 
 pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_system(exit_game)
-            .add_system(player_enemy_collision_reaction.after(PlayerEnemyCollision))
-            .add_system(game_over_reaction.in_set(Labels::GameOver).after(player_enemy_collision_reaction))
-            .add_event::<GameOverEvent>();
-
+            .add_system(pause_simulation.in_schedule(OnEnter(AppState::Game)))
+            .add_state::<SimulationState>()
+            .add_plugin(over::GameOverPlugin)
+            .add_plugin(player::PlayerPlugin)
+            .add_plugin(enemy::EnemyPlugin)
+            .add_plugin(star::StarPlugin)
+            .add_plugin(score::ScorePlugin)
+            .add_system(resume_simulation.in_schedule(OnExit(AppState::Game)))
+            .add_system(toggle_simulation.run_if(in_state(AppState::Game)));
     }
 }
 
-#[derive(Debug, Hash, PartialEq, Eq, Clone, SystemSet)]
-pub enum Labels {
-    GameOver,
+#[derive(States, Clone, Eq, PartialEq, Debug, Hash, Copy, Default)]
+pub enum SimulationState {
+    Running,
+    #[default]
+    Paused,
 }
+

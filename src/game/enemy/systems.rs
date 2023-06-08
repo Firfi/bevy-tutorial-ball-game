@@ -1,15 +1,15 @@
 use bevy::window::PrimaryWindow;
 use bevy::prelude::*;
-use crate::collision::detect_collision_circles;
-use crate::enemy::components::*;
-use crate::enemy::events::*;
-use crate::enemy::constants::*;
-use crate::enemy::utils::*;
-use crate::enemy::resources::*;
-use crate::player::components::Player;
+use crate::game::collision::detect_collision_circles;
+use crate::game::enemy::components::*;
+use crate::game::enemy::events::*;
+use crate::game::enemy::constants::*;
+use crate::game::enemy::utils::*;
+use crate::game::enemy::resources::*;
+use crate::game::player::components::Player;
 use crate::timer::*;
 use rand::prelude::*;
-use crate::player::constants::PLAYER_SIZE;
+use crate::game::player::constants::PLAYER_SIZE;
 
 pub fn enemy_movement(
     mut enemy_query: Query<(&mut Transform, &Enemy)>,
@@ -89,11 +89,21 @@ pub fn spawn_enemies(
     asset_server: Res<AssetServer>,
     player_transform_query: Query<&Transform, With<Player>>
 ) {
+    println!("Spawning enemies");
     let window = window_query.single();
     for _ in 0..NUMBER_OF_ENEMIES {
         if let Some(enemy) = make_random_enemy(&asset_server, window, &player_transform_query) {
             commands.spawn(enemy);
         }
+    }
+}
+
+pub fn despawn_enemies(
+    mut commands: Commands,
+    enemy_query: Query<Entity, With<Enemy>>,
+) {
+    for enemy in enemy_query.iter() {
+        commands.entity(enemy).despawn();
     }
 }
 

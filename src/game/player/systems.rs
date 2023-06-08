@@ -1,11 +1,11 @@
 use bevy::window::PrimaryWindow;
 use bevy::prelude::*;
-use crate::enemy::events::EnemyPlayerCollideEvent;
-use crate::player::components::*;
-use crate::player::constants::*;
-use crate::player::utils::play_enemy_player_collision_sound;
-use crate::score::components::ScoreComponent;
-use crate::score::types::StarCount;
+use crate::game::enemy::events::EnemyPlayerCollideEvent;
+use crate::game::player::components::*;
+use crate::game::player::constants::*;
+use crate::game::player::utils::play_enemy_player_collision_sound;
+use crate::game::score::components::ScoreComponent;
+use crate::game::score::types::StarCount;
 
 pub fn player_movement(
     keyboard_input: Res<Input<KeyCode>>,
@@ -81,6 +81,7 @@ pub fn spawn_player(
     window_query: Query<&Window, With<PrimaryWindow>>,
     asset_server: Res<AssetServer>,
 ) {
+    println!("spawn_player");
     let window = window_query.single();
     commands.spawn(
         (
@@ -93,4 +94,13 @@ pub fn spawn_player(
             ScoreComponent(StarCount(0)),
         )
     );
+}
+
+pub fn despawn_player(
+    mut commands: Commands,
+    player_query: Query<Entity, With<Player>>,
+) {
+    for player_entity in player_query.iter() {
+        commands.entity(player_entity).despawn_recursive();
+    }
 }

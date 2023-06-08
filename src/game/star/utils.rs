@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::star::components::*;
+use crate::game::star::components::*;
 use rand::prelude::*;
 
 pub fn make_random_star(

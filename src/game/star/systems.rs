@@ -1,12 +1,12 @@
 use bevy::window::PrimaryWindow;
 use bevy::prelude::*;
-use crate::player::components::Player;
-use crate::player::constants::PLAYER_SIZE;
-use crate::star::events::*;
-use crate::star::components::*;
-use crate::star::constants::*;
-use crate::star::utils::*;
-use crate::star::resources::*;
+use crate::game::player::components::Player;
+use crate::game::player::constants::PLAYER_SIZE;
+use crate::game::star::events::*;
+use crate::game::star::components::*;
+use crate::game::star::constants::*;
+use crate::game::star::utils::*;
+use crate::game::star::resources::*;
 use crate::timer::spawn_timer;
 
 pub fn play_star_player_collision_sound(
@@ -56,6 +56,15 @@ pub fn spawn_stars(
         commands.spawn(
             make_random_star(&asset_server, window)
         );
+    }
+}
+
+pub fn despawn_stars(
+    mut commands: Commands,
+    star_query: Query<Entity, With<Star>>,
+) {
+    for star in star_query.iter() {
+        commands.entity(star).despawn();
     }
 }
 

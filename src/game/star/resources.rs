@@ -1,6 +1,6 @@
 use bevy::time::TimerMode::Repeating;
 use bevy::prelude::*;
-use crate::star::constants::*;
+use crate::game::star::constants::*;
 
 #[derive(Resource)]
 pub struct StarSpawnTimer(pub Timer);

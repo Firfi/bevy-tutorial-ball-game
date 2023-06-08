@@ -1,6 +1,6 @@
-use crate::score::types::*;
+use crate::game::score::types::*;
 use bevy::prelude::*;
-use crate::player::types::*;
+use crate::game::player::types::*;
 
 #[derive(Resource)]
 pub struct HighScores {
